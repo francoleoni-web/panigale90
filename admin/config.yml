@@ -7,7 +7,7 @@
 #     qui sotto e metti l'URL del tuo Worker.
 backend:
   name: github
-  repo: francoleoni-web/panigale90
+  repo: giuliosaladini/panigale90
   branch: main
   # base_url: https://panigale90-auth.NOME-UTENTE.workers.dev   # solo per l'opzione Cloudflare Worker
   commit_messages:

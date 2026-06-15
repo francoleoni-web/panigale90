@@ -14,7 +14,7 @@ Il login usa l'**account GitHub** di chi gestisce il sito. Per funzionare serve 
 
 1. Vai su **netlify.com** → registrati gratis (puoi usare "Sign up with GitHub").
 2. **Add new site → Import an existing project → GitHub** → scegli il repository
-   `francoleoni-web/panigale90`. Build: nessuna (sito statico), publish directory: `/`.
+   `giuliosaladini/panigale90`. Build: nessuna (sito statico), publish directory: `/`.
 3. A sito creato: **Site configuration → Access control → OAuth → Install provider → GitHub**.
    (Netlify fa così da broker per il login del pannello: non serve creare nient'altro.)
 4. Vai su `https://<nome-sito>.netlify.app/admin` → **Login with GitHub** → fatto.
@@ -44,7 +44,7 @@ Tiene tutto su GitHub Pages (come ora) e usa un piccolo Worker gratuito su Cloud
 ---
 
 ## Chi può accedere
-Può entrare solo chi ha accesso in scrittura al repository `francoleoni-web/panigale90`.
+Può entrare solo chi ha accesso in scrittura al repository `giuliosaladini/panigale90`.
 - Se gestisci tu: usi il tuo account GitHub.
 - Se lo gestisce Giulio: crea un account GitHub e aggiungilo come **collaboratore** del repo
   (*Settings → Collaborators → Add people*).
