@@ -46,16 +46,20 @@ collections:
         format: json
         description: 'Titolo principale, testo introduttivo e paragrafi secondari. Puoi aggiungere quanti paragrafi vuoi con "Add".'
         fields:
-          - { name: title, label: 'Titolo principale', widget: string }
-          - { name: intro, label: 'Testo introduttivo', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true }
+          - { name: title, label: 'Titolo principale (IT)', widget: string }
+          - { name: title_en, label: 'Titolo principale (EN)', widget: string, required: false }
+          - { name: intro, label: 'Testo introduttivo (IT)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true }
+          - { name: intro_en, label: 'Testo introduttivo (EN)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true, required: false }
           - name: sections
             label: 'Paragrafi secondari'
             label_singular: 'Paragrafo'
             widget: list
             summary: '{{fields.heading}}'
             fields:
-              - { name: heading, label: 'Titolo del paragrafo', widget: string }
-              - { name: body, label: 'Testo', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true }
+              - { name: heading, label: 'Titolo del paragrafo (IT)', widget: string }
+              - { name: heading_en, label: 'Titolo del paragrafo (EN)', widget: string, required: false }
+              - { name: body, label: 'Testo (IT)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true }
+              - { name: body_en, label: 'Testo (EN)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true, required: false }
       - name: foto
         label: 'Foto'
         file: gallery.json
@@ -69,4 +73,5 @@ collections:
             summary: '{{fields.caption}}'
             fields:
               - { name: image, label: 'Immagine', widget: image }
-              - { name: caption, label: 'Didascalia', widget: string, required: false }
+              - { name: caption, label: 'Didascalia (IT)', widget: string, required: false }
+              - { name: caption_en, label: 'Didascalia (EN)', widget: string, required: false }

@@ -1,14 +1,20 @@
 {
   "title": "L'alloggio",
+  "title_en": "The apartment",
   "intro": "L'appartamento è situato nel contesto di un **borgo**, in una parte di campagna dentro la città: al **piano terra con ingresso indipendente**, completamente arredato, tranquillo e luminoso. È ideale per riposarsi ed è dotato di **ampio parcheggio auto** all'interno del giardino condominiale.\n\nNel soggiorno la parete cottura è arredata e completa di tutto il necessario per cucinare e mangiare. È presente anche la **lavatrice**, con la possibilità di stendere nel giardino condominiale per gli ospiti che soggiornano più giorni.",
+  "intro_en": "The apartment is set within a **borough**, in a pocket of countryside inside the city: on the **ground floor with a private entrance**, fully furnished, quiet and bright. It is ideal for relaxing and comes with **ample car parking** inside the shared garden.\n\nIn the living room the kitchenette is fully equipped with everything you need to cook and eat. There is also a **washing machine**, with the option to hang laundry in the shared garden for guests staying several days.",
   "sections": [
     {
       "heading": "Accesso degli ospiti",
-      "body": "Si accede alla struttura tramite una **sbarra telecomandata** che dà ingresso al borgo e al suo grande giardino, dove è possibile parcheggiare l'auto. Il giardino è di uso comune e comprende un'area di ristoro, oltre allo stenditoio per gli ospiti che desiderano fermarsi più giorni."
+      "heading_en": "Guest access",
+      "body": "Si accede alla struttura tramite una **sbarra telecomandata** che dà ingresso al borgo e al suo grande giardino, dove è possibile parcheggiare l'auto. Il giardino è di uso comune e comprende un'area di ristoro, oltre allo stenditoio per gli ospiti che desiderano fermarsi più giorni.",
+      "body_en": "You enter the property through a **remote-controlled barrier** that opens onto the borough and its large garden, where you can park your car. The garden is shared and includes a seating area, plus a drying rack for guests who wish to stay several days."
     },
     {
       "heading": "La zona",
-      "body": "La struttura si trova a **Borgo Panigale** (zona ovest di Bologna), tra la fabbrica della **Ducati** e l'Aeroporto Guglielmo Marconi. Da qui si raggiungono facilmente l'**Unipol Arena** di Casalecchio di Reno e lo **Stadio Renato Dall'Ara**, dove si tengono concerti, eventi e manifestazioni sportive. Un'altra attrattiva è il **Museo Ducati**, in Via Cavalieri Ducati 3."
+      "heading_en": "The area",
+      "body": "La struttura si trova a **Borgo Panigale** (zona ovest di Bologna), tra la fabbrica della **Ducati** e l'Aeroporto Guglielmo Marconi. Da qui si raggiungono facilmente l'**Unipol Arena** di Casalecchio di Reno e lo **Stadio Renato Dall'Ara**, dove si tengono concerti, eventi e manifestazioni sportive. Un'altra attrattiva è il **Museo Ducati**, in Via Cavalieri Ducati 3.",
+      "body_en": "The property is in **Borgo Panigale** (western Bologna), between the **Ducati** factory and Guglielmo Marconi Airport. From here you can easily reach the **Unipol Arena** in Casalecchio di Reno and the **Renato Dall'Ara Stadium**, which host concerts, events and sports. Another attraction is the **Ducati Museum**, at Via Cavalieri Ducati 3."
     }
   ]
 }

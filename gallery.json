@@ -1,44 +1,14 @@
 {
   "photos": [
-    {
-      "image": "/assets/img/photo-01.jpg",
-      "caption": "Esterno — il borgo e l'ingresso indipendente"
-    },
-    {
-      "image": "/assets/img/photo-03.jpg",
-      "caption": "Soggiorno con angolo cottura"
-    },
-    {
-      "image": "/assets/img/photo-07.jpg",
-      "caption": "Giardino condominiale con parcheggio"
-    },
-    {
-      "image": "/assets/img/photo-04.jpg",
-      "caption": "Interni dell'appartamento"
-    },
-    {
-      "image": "/assets/img/photo-05.jpg",
-      "caption": "Zona giorno"
-    },
-    {
-      "image": "/assets/img/photo-06.jpg",
-      "caption": "Dettagli dell'alloggio"
-    },
-    {
-      "image": "/assets/img/photo-08.jpg",
-      "caption": "Camera / zona notte"
-    },
-    {
-      "image": "/assets/img/photo-09.jpg",
-      "caption": "Ambienti luminosi"
-    },
-    {
-      "image": "/assets/img/photo-10.jpg",
-      "caption": "Spazi dell'appartamento"
-    },
-    {
-      "image": "/assets/img/photo-02.jpg",
-      "caption": "Il borgo"
-    }
+    { "image": "/assets/img/photo-01.jpg", "caption": "Esterno — il borgo e l'ingresso indipendente", "caption_en": "Exterior — the borough and the private entrance" },
+    { "image": "/assets/img/photo-03.jpg", "caption": "Soggiorno con angolo cottura", "caption_en": "Living room with kitchenette" },
+    { "image": "/assets/img/photo-07.jpg", "caption": "Giardino condominiale con parcheggio", "caption_en": "Shared garden with parking" },
+    { "image": "/assets/img/photo-04.jpg", "caption": "Interni dell'appartamento", "caption_en": "Apartment interior" },
+    { "image": "/assets/img/photo-05.jpg", "caption": "Zona giorno", "caption_en": "Living area" },
+    { "image": "/assets/img/photo-06.jpg", "caption": "Dettagli dell'alloggio", "caption_en": "Details of the apartment" },
+    { "image": "/assets/img/photo-08.jpg", "caption": "Camera / zona notte", "caption_en": "Bedroom / sleeping area" },
+    { "image": "/assets/img/photo-09.jpg", "caption": "Ambienti luminosi", "caption_en": "Bright rooms" },
+    { "image": "/assets/img/photo-10.jpg", "caption": "Spazi dell'appartamento", "caption_en": "Apartment spaces" },
+    { "image": "/assets/img/photo-02.jpg", "caption": "Il borgo", "caption_en": "The borough" }
   ]
 }
