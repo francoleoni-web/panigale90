@@ -20,7 +20,7 @@
       "caption_en": "Shared garden with parking"
     },
     {
-      "image": "/assets/img/photo-04.jpg",
+      "image": "/assets/img/camera_luminosa.jpg",
       "caption": "Interni dell'appartamento",
       "caption_en": "Apartment interior"
     },
@@ -53,9 +53,6 @@
       "image": "/assets/img/photo-02.jpg",
       "caption": "Il borgo",
       "caption_en": "The borough"
-    },
-    {
-      "image": "/assets/img/camera_luminosa.jpg"
     }
   ]
 }
