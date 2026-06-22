@@ -1,0 +1,22 @@
+{
+  "show": true,
+  "title": "Le recensioni",
+  "title_en": "Reviews",
+  "sub": "Il giudizio reale di chi ha soggiornato, verificato da Booking.com.",
+  "sub_en": "Real feedback from past guests, verified by Booking.com.",
+  "score": "9,0",
+  "scoreLabel": "Eccellente",
+  "scoreLabel_en": "Excellent",
+  "count": "223",
+  "tagline": "“Scelta degli ospiti”",
+  "tagline_en": "“Guests' favourite”",
+  "url": "https://www.booking.com/hotel/it/panigale90.it.html",
+  "subscores": [
+    { "label": "Personale", "label_en": "Staff", "value": "9,5" },
+    { "label": "Rapporto qualità-prezzo", "label_en": "Value for money", "value": "9,2" },
+    { "label": "Pulizia", "label_en": "Cleanliness", "value": "9,1" },
+    { "label": "Comfort", "label_en": "Comfort", "value": "9,1" },
+    { "label": "Posizione", "label_en": "Location", "value": "9,0" },
+    { "label": "Servizi", "label_en": "Facilities", "value": "9,0" }
+  ]
+}

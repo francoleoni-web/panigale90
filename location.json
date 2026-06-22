@@ -1,0 +1,17 @@
+{
+  "title": "Dove siamo",
+  "title_en": "Location",
+  "sub": "Borgo Panigale, zona ovest di Bologna — ben collegata e comoda all'aeroporto.",
+  "sub_en": "Borgo Panigale, western Bologna — well connected and handy for the airport.",
+  "maplink": "Apri mappa più grande ↗",
+  "maplink_en": "Open larger map ↗",
+  "points": [
+    { "text": "**Stazione di Borgo Panigale** — ~950 m · 6 min di treno fino alla Stazione Centrale", "text_en": "**Borgo Panigale station** — ~950 m · 6 min by train to Bologna Centrale" },
+    { "text": "**Autobus n. 23** e tram (in arrivo) sulla Via Emilia — fermata a ~450 m", "text_en": "**Bus no. 23** and tram (coming soon) on Via Emilia — stop ~450 m away" },
+    { "text": "**Centro commerciale COOP “Centroborgo”** — ~1,1 km", "text_en": "**COOP “Centroborgo” shopping centre** — ~1.1 km" },
+    { "text": "**Fabbrica e Museo Ducati** — nelle vicinanze", "text_en": "**Ducati factory and museum** — nearby" },
+    { "text": "**Aeroporto G. Marconi** — pochi minuti", "text_en": "**G. Marconi Airport** — a few minutes away" },
+    { "text": "**Unipol Arena** e **Stadio Dall'Ara** — facilmente raggiungibili", "text_en": "**Unipol Arena** and **Dall'Ara Stadium** — easily reachable" },
+    { "text": "**Uscita 2 della tangenziale** — collegamento diretto alle autostrade", "text_en": "**Ring-road exit 2** — direct link to the motorways" }
+  ]
+}

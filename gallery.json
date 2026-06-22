@@ -1,4 +1,8 @@
 {
+  "title": "Galleria fotografica",
+  "title_en": "Photo gallery",
+  "sub": "Spazi luminosi, ingresso indipendente e un grande giardino condominiale.",
+  "sub_en": "Bright spaces, a private entrance and a large shared garden.",
   "photos": [
     { "image": "/assets/img/photo-01.jpg", "caption": "Esterno — il borgo e l'ingresso indipendente", "caption_en": "Exterior — the borough and the private entrance" },
     { "image": "/assets/img/photo-03.jpg", "caption": "Soggiorno con angolo cottura", "caption_en": "Living room with kitchenette" },

@@ -1,22 +1,14 @@
 # Configurazione del pannello di gestione (Decap CMS)
-# ---------------------------------------------------
-# AUTENTICAZIONE: il login usa l'account GitHub di chi gestisce il sito.
-# Serve un piccolo "broker" OAuth. Due opzioni (vedi SETUP-ADMIN.md):
-#   • Hosting su Netlify  -> non serve toccare nulla qui (Netlify fa da broker).
-#   • Hosting su GitHub Pages + Cloudflare Worker -> togli il commento a "base_url"
-#     qui sotto e metti l'URL del tuo Worker.
+# Hosting su Netlify: l'autenticazione (login GitHub) è gestita da Netlify, non serve base_url.
 backend:
   name: github
   repo: giuliosaladini/panigale90
   branch: main
-  # base_url: https://panigale90-auth.NOME-UTENTE.workers.dev   # solo per l'opzione Cloudflare Worker
   commit_messages:
-    update: 'Aggiorno disponibilità dal pannello'
+    update: 'Aggiorno {{collection}} dal pannello'
 
 locale: it
 load_config_file: true
-
-# Cartelle dove vengono caricate le foto dal pannello
 media_folder: assets/img
 public_folder: /assets/img
 
@@ -28,7 +20,7 @@ collections:
         label: 'Disponibilità — date occupate'
         file: availability.json
         format: json
-        description: 'Aggiungi o rimuovi i periodi in cui l''appartamento è già occupato. Le date appariranno bloccate sul sito.'
+        description: 'Periodi in cui l''appartamento è già occupato. Appariranno bloccati sul calendario.'
         fields:
           - { name: minNights, label: 'Soggiorno minimo (notti)', widget: number, default: 2, min: 1 }
           - { name: contactEmail, label: 'Email per le richieste', widget: string }
@@ -40,11 +32,39 @@ collections:
             fields:
               - { name: from, label: 'Dal (check-in occupato)', widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
               - { name: to, label: 'Al (ultima notte occupata)', widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+
+      - name: intestazione
+        label: 'Intestazione (hero)'
+        file: hero.json
+        format: json
+        description: 'Testo grande in cima al sito e i 5 riquadri informativi.'
+        fields:
+          - { name: eyebrow, label: 'Sopra-titolo (es. zona · città)', widget: string }
+          - { name: tagline, label: 'Frase principale (IT)', widget: string }
+          - { name: tagline_en, label: 'Frase principale (EN)', widget: string, required: false }
+          - { name: type, label: 'Tipologia (IT)', widget: string }
+          - { name: type_en, label: 'Tipologia (EN)', widget: string, required: false }
+          - { name: guests, label: 'Ospiti (IT)', widget: string }
+          - { name: guests_en, label: 'Ospiti (EN)', widget: string, required: false }
+          - { name: ctaPrimary, label: 'Pulsante 1 (IT)', widget: string }
+          - { name: ctaPrimary_en, label: 'Pulsante 1 (EN)', widget: string, required: false }
+          - { name: ctaSecondary, label: 'Pulsante 2 (IT)', widget: string }
+          - { name: ctaSecondary_en, label: 'Pulsante 2 (EN)', widget: string, required: false }
+          - name: facts
+            label: 'Riquadri informativi'
+            label_singular: 'Riquadro'
+            widget: list
+            summary: '{{fields.num}} — {{fields.label}}'
+            fields:
+              - { name: num, label: 'Numero/simbolo (es. 2 o ★)', widget: string }
+              - { name: label, label: 'Etichetta (IT)', widget: string }
+              - { name: label_en, label: 'Etichetta (EN)', widget: string, required: false }
+
       - name: testi
         label: 'Testi — L''alloggio'
         file: about.json
         format: json
-        description: 'Titolo principale, testo introduttivo e paragrafi secondari. Puoi aggiungere quanti paragrafi vuoi con "Add".'
+        description: 'Titolo, testo introduttivo e paragrafi secondari (quanti vuoi, con "Add").'
         fields:
           - { name: title, label: 'Titolo principale (IT)', widget: string }
           - { name: title_en, label: 'Titolo principale (EN)', widget: string, required: false }
@@ -60,12 +80,38 @@ collections:
               - { name: heading_en, label: 'Titolo del paragrafo (EN)', widget: string, required: false }
               - { name: body, label: 'Testo (IT)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true }
               - { name: body_en, label: 'Testo (EN)', widget: markdown, buttons: ['bold', 'italic'], editor_components: [], minimal: true, required: false }
+
+      - name: scheda_host
+        label: 'Scheda host (riquadro a lato)'
+        file: host.json
+        format: json
+        description: 'Il riquadro "Il tuo host", con le righe info (Check-in, Tipologia, ecc.). Usa **doppi asterischi** per il grassetto.'
+        fields:
+          - { name: hostLine, label: 'Riga host (IT)', widget: string }
+          - { name: hostLine_en, label: 'Riga host (EN)', widget: string, required: false }
+          - { name: cta, label: 'Pulsante (IT)', widget: string }
+          - { name: cta_en, label: 'Pulsante (EN)', widget: string, required: false }
+          - name: rows
+            label: 'Righe informative'
+            label_singular: 'Riga'
+            widget: list
+            summary: '{{fields.label}}: {{fields.value}}'
+            fields:
+              - { name: label, label: 'Etichetta (IT)', widget: string }
+              - { name: label_en, label: 'Etichetta (EN)', widget: string, required: false }
+              - { name: value, label: 'Valore (IT)', widget: string }
+              - { name: value_en, label: 'Valore (EN)', widget: string, required: false }
+
       - name: foto
-        label: 'Foto'
+        label: 'Foto + Galleria'
         file: gallery.json
         format: json
-        description: 'Carica, elimina e riordina le foto. ⚠️ La PRIMA foto dell''elenco è quella grande in cima al sito (hero): trascina una foto in cima per metterla in evidenza.'
+        description: 'Titolo della sezione e le foto. ⚠️ La PRIMA foto è quella grande in cima (hero): trascina in cima per metterla in evidenza.'
         fields:
+          - { name: title, label: 'Titolo sezione (IT)', widget: string }
+          - { name: title_en, label: 'Titolo sezione (EN)', widget: string, required: false }
+          - { name: sub, label: 'Sottotitolo (IT)', widget: string, required: false }
+          - { name: sub_en, label: 'Sottotitolo (EN)', widget: string, required: false }
           - name: photos
             label: 'Foto (la prima è in evidenza)'
             label_singular: 'Foto'
@@ -75,3 +121,88 @@ collections:
               - { name: image, label: 'Immagine', widget: image }
               - { name: caption, label: 'Didascalia (IT)', widget: string, required: false }
               - { name: caption_en, label: 'Didascalia (EN)', widget: string, required: false }
+
+      - name: servizi
+        label: 'Servizi e dotazioni'
+        file: amenities.json
+        format: json
+        description: 'Accendi/spegni i servizi con l''interruttore, cambia il testo o l''icona (emoji), riordina trascinando. Solo quelli accesi appaiono sul sito.'
+        fields:
+          - { name: title, label: 'Titolo sezione (IT)', widget: string }
+          - { name: title_en, label: 'Titolo sezione (EN)', widget: string, required: false }
+          - { name: sub, label: 'Sottotitolo (IT)', widget: string, required: false }
+          - { name: sub_en, label: 'Sottotitolo (EN)', widget: string, required: false }
+          - name: items
+            label: 'Servizi'
+            label_singular: 'Servizio'
+            widget: list
+            summary: '{{fields.icon}} {{fields.label}}'
+            fields:
+              - { name: on, label: 'Attivo (mostra sul sito)', widget: boolean, default: false }
+              - { name: icon, label: 'Icona (emoji)', widget: string }
+              - { name: label, label: 'Testo (IT)', widget: string }
+              - { name: label_en, label: 'Testo (EN)', widget: string, required: false }
+
+      - name: recensioni
+        label: 'Recensioni'
+        file: reviews.json
+        format: json
+        description: 'Punteggio e recensioni Booking. Aggiorna qui il numero quando cambia. Togli "Mostra la sezione" per nasconderla.'
+        fields:
+          - { name: show, label: 'Mostra la sezione', widget: boolean, default: true }
+          - { name: title, label: 'Titolo (IT)', widget: string }
+          - { name: title_en, label: 'Titolo (EN)', widget: string, required: false }
+          - { name: sub, label: 'Sottotitolo (IT)', widget: string, required: false }
+          - { name: sub_en, label: 'Sottotitolo (EN)', widget: string, required: false }
+          - { name: score, label: 'Punteggio (es. 9,0)', widget: string }
+          - { name: count, label: 'Numero di recensioni', widget: string }
+          - { name: scoreLabel, label: 'Etichetta punteggio (IT, es. Eccellente)', widget: string, required: false }
+          - { name: scoreLabel_en, label: 'Etichetta punteggio (EN)', widget: string, required: false }
+          - { name: tagline, label: 'Frase (IT, es. “Scelta degli ospiti”)', widget: string, required: false }
+          - { name: tagline_en, label: 'Frase (EN)', widget: string, required: false }
+          - { name: url, label: 'Link a Booking', widget: string }
+          - name: subscores
+            label: 'Sottopunteggi'
+            label_singular: 'Sottopunteggio'
+            widget: list
+            summary: '{{fields.label}}: {{fields.value}}'
+            fields:
+              - { name: label, label: 'Voce (IT)', widget: string }
+              - { name: label_en, label: 'Voce (EN)', widget: string, required: false }
+              - { name: value, label: 'Voto (es. 9,5)', widget: string }
+
+      - name: dove_siamo
+        label: 'Dove siamo'
+        file: location.json
+        format: json
+        description: 'Testo della sezione mappa e l''elenco dei punti di interesse. Usa **doppi asterischi** per il grassetto.'
+        fields:
+          - { name: title, label: 'Titolo (IT)', widget: string }
+          - { name: title_en, label: 'Titolo (EN)', widget: string, required: false }
+          - { name: sub, label: 'Sottotitolo (IT)', widget: string, required: false }
+          - { name: sub_en, label: 'Sottotitolo (EN)', widget: string, required: false }
+          - { name: maplink, label: 'Testo link mappa (IT)', widget: string, required: false }
+          - { name: maplink_en, label: 'Testo link mappa (EN)', widget: string, required: false }
+          - name: points
+            label: 'Punti di interesse'
+            label_singular: 'Punto'
+            widget: list
+            summary: '{{fields.text}}'
+            fields:
+              - { name: text, label: 'Testo (IT)', widget: string }
+              - { name: text_en, label: 'Testo (EN)', widget: string, required: false }
+
+      - name: prenotazione
+        label: 'Prenotazione e contatti'
+        file: book.json
+        format: json
+        description: 'Testo della sezione "Prenota" e i recapiti (usati nei pulsanti e nel footer).'
+        fields:
+          - { name: title, label: 'Titolo (IT)', widget: string }
+          - { name: title_en, label: 'Titolo (EN)', widget: string, required: false }
+          - { name: intro, label: 'Testo (IT)', widget: string }
+          - { name: intro_en, label: 'Testo (EN)', widget: string, required: false }
+          - { name: whatsappIntl, label: 'WhatsApp (formato internazionale, es. 393313302299)', widget: string }
+          - { name: phoneDisplay, label: 'Telefono (come mostrato)', widget: string }
+          - { name: phoneIntl, label: 'Telefono (per chiamare, es. +393313302299)', widget: string }
+          - { name: email, label: 'Email', widget: string }

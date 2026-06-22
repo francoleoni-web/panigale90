@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-<style>.hero{min-height:430px!important}html{scroll-behavior:auto}</style><script>localStorage.setItem("lang","en")</script></head>
+<style>.hero{min-height:380px!important}html{scroll-behavior:auto}</style><script>localStorage.setItem("lang","en")</script></head>
 <body>
   <!-- NAV -->
   <header class="nav" id="top">
@@ -41,60 +41,39 @@
       <div class="hero__overlay"></div>
     </div>
     <div class="container hero__content">
-      <p class="hero__eyebrow">Borgo Panigale · Bologna</p>
+      <p class="hero__eyebrow" id="heroEyebrow"></p>
       <h1>Panigale 90</h1>
-      <p class="hero__tagline" data-en="Your holiday in Bologna — peaceful and just a short hop from the centre.">Le tue vacanze a Bologna, in tranquillità e a due passi dal centro.</p>
-      <div class="hero__meta">
-        <span class="bk-badge"><b>9,0</b> Booking.com</span>
-        <span data-en="221 reviews">221 recensioni</span>
-        <span class="dot">•</span>
-        <span data-en="Entire apartment">Intero appartamento</span>
-        <span class="dot">•</span>
-        <span data-en="2 guests">2 ospiti</span>
-      </div>
+      <p class="hero__tagline" id="heroTagline"></p>
+      <div class="hero__meta" id="heroMeta"></div>
       <div class="hero__cta">
-        <a href="#book" class="btn" data-en="Check availability">Verifica disponibilità</a>
-        <a href="#gallery" class="btn btn--ghost" data-en="See the photos">Guarda le foto</a>
+        <a href="#book" class="btn" id="heroCta1"></a>
+        <a href="#gallery" class="btn btn--ghost" id="heroCta2"></a>
       </div>
     </div>
   </section>
 
   <!-- QUICK FACTS -->
   <section class="facts">
-    <div class="container facts__grid">
-      <div class="fact"><span class="fact__num">2</span><span class="fact__label" data-en="Guests">Ospiti</span></div>
-      <div class="fact"><span class="fact__num">1</span><span class="fact__label" data-en="Bedroom">Camera da letto</span></div>
-      <div class="fact"><span class="fact__num">1</span><span class="fact__label" data-en="Bed">Letto</span></div>
-      <div class="fact"><span class="fact__num">1</span><span class="fact__label" data-en="Bathroom">Bagno</span></div>
-      <div class="fact"><span class="fact__num">★</span><span class="fact__label" data-en="Free parking">Parcheggio gratuito</span></div>
-    </div>
+    <div class="container facts__grid" id="factsGrid"></div>
   </section>
 
   <!-- GALLERY -->
   <section id="gallery" class="section">
     <div class="container">
-      <h2 class="section__title" data-en="Photo gallery">Galleria fotografica</h2>
-      <p class="section__sub" data-en="Bright spaces, a private entrance and a large shared garden.">Spazi luminosi, ingresso indipendente e un grande giardino condominiale.</p>
-      <div class="gallery" id="galleryGrid"><!-- populated by JS --></div>
+      <h2 class="section__title" id="galleryTitle"></h2>
+      <p class="section__sub" id="gallerySub"></p>
+      <div class="gallery" id="galleryGrid"></div>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section id="about" class="section section--alt">
     <div class="container about">
-      <div class="about__text"><!-- populated by JS from about.json -->
-        <h2 class="section__title">L'alloggio</h2>
-      </div>
+      <div class="about__text"><!-- populated by JS from about.json --></div>
       <aside class="about__card">
-        <p class="about__host" data-en="Your host is <strong>Giulio</strong>">Il tuo host è <strong>Giulio</strong></p>
-        <ul class="about__list">
-          <li><span data-en="Check-in">Check-in</span><strong>16:00 – 23:00</strong></li>
-          <li><span data-en="Type">Tipologia</span><strong data-en="Entire apartment">Intero appartamento</strong></li>
-          <li><span data-en="Floor">Piano</span><strong data-en="Ground, private entrance">Terra, ingresso indip.</strong></li>
-          <li><span data-en="Parking">Parcheggio</span><strong data-en="Free in the garden">Gratuito nel giardino</strong></li>
-          <li><span>Booking.com</span><strong>9,0/10 (221)</strong></li>
-        </ul>
-        <a href="#book" class="btn btn--block" data-en="Request dates">Richiedi le date</a>
+        <p class="about__host" id="hostLine"></p>
+        <ul class="about__list" id="hostRows"></ul>
+        <a href="#book" class="btn btn--block" id="hostCta"></a>
       </aside>
     </div>
   </section>
@@ -102,31 +81,24 @@
   <!-- AMENITIES -->
   <section id="amenities" class="section">
     <div class="container">
-      <h2 class="section__title" data-en="Amenities">Servizi e dotazioni</h2>
-      <p class="section__sub" data-en="Everything you need for a comfortable, independent stay.">Tutto il necessario per un soggiorno comodo e indipendente.</p>
-      <ul class="amenities" id="amenitiesGrid"><!-- populated by JS --></ul>
+      <h2 class="section__title" id="amenTitle"></h2>
+      <p class="section__sub" id="amenSub"></p>
+      <ul class="amenities" id="amenitiesGrid"></ul>
     </div>
   </section>
 
   <!-- REVIEWS -->
   <section id="reviews" class="section section--alt">
     <div class="container">
-      <h2 class="section__title" data-en="Reviews">Le recensioni</h2>
-      <p class="section__sub" data-en="Real feedback from past guests, verified by Booking.com.">Il giudizio reale di chi ha soggiornato, verificato da Booking.com.</p>
+      <h2 class="section__title" id="revTitle"></h2>
+      <p class="section__sub" id="revSub"></p>
       <div class="reviews">
         <div class="reviews__score">
-          <div class="bk-score">9,0</div>
-          <p class="reviews__label" data-en="<strong>Excellent</strong><br />221 reviews · “Guests' favourite”"><strong>Eccellente</strong><br />221 recensioni · “Scelta degli ospiti”</p>
-          <a class="btn btn--book" href="https://www.booking.com/hotel/it/panigale90.it.html" target="_blank" rel="noopener" data-en="Read on Booking.com ↗">Leggi su Booking.com ↗</a>
+          <div class="bk-score" id="revScore"></div>
+          <p class="reviews__label" id="revLabel"></p>
+          <a class="btn btn--book" id="revUrl" target="_blank" rel="noopener"></a>
         </div>
-        <ul class="reviews__bars">
-          <li><span data-en="Staff">Personale</span><i><b style="width:95%"></b></i><em>9,5</em></li>
-          <li><span data-en="Value for money">Rapporto qualità-prezzo</span><i><b style="width:93%"></b></i><em>9,3</em></li>
-          <li><span data-en="Cleanliness">Pulizia</span><i><b style="width:92%"></b></i><em>9,2</em></li>
-          <li><span data-en="Comfort">Comfort</span><i><b style="width:91%"></b></i><em>9,1</em></li>
-          <li><span data-en="Location">Posizione</span><i><b style="width:90%"></b></i><em>9,0</em></li>
-          <li><span data-en="Facilities">Servizi</span><i><b style="width:90%"></b></i><em>9,0</em></li>
-        </ul>
+        <ul class="reviews__bars" id="revBars"></ul>
       </div>
     </div>
   </section>
@@ -158,8 +130,8 @@
   <!-- LOCATION -->
   <section id="location" class="section">
     <div class="container">
-      <h2 class="section__title" data-en="Location">Dove siamo</h2>
-      <p class="section__sub" data-en="Borgo Panigale, western Bologna — well connected and handy for the airport.">Borgo Panigale, zona ovest di Bologna — ben collegata e comoda all'aeroporto.</p>
+      <h2 class="section__title" id="locTitle"></h2>
+      <p class="section__sub" id="locSub"></p>
       <div class="location">
         <div class="location__map">
           <iframe
@@ -167,17 +139,9 @@
             loading="lazy"
             src="https://www.openstreetmap.org/export/embed.html?bbox=11.26%2C44.510%2C11.296%2C44.530&amp;layer=mapnik&amp;marker=44.51988%2C11.27823">
           </iframe>
-          <a class="location__maplink" href="https://www.openstreetmap.org/?mlat=44.51988&mlon=11.27823#map=15/44.51988/11.27823" target="_blank" rel="noopener" data-en="Open larger map ↗">Apri mappa più grande ↗</a>
+          <a class="location__maplink" id="locMaplink" href="https://www.openstreetmap.org/?mlat=44.51988&mlon=11.27823#map=15/44.51988/11.27823" target="_blank" rel="noopener"></a>
         </div>
-        <ul class="location__list">
-          <li data-en="<strong>Borgo Panigale station</strong> — ~950 m · 6 min by train to Bologna Centrale"><strong>Stazione di Borgo Panigale</strong> — ~950 m · 6 min di treno fino alla Stazione Centrale</li>
-          <li data-en="<strong>Bus no. 23</strong> and tram (coming soon) on Via Emilia — stop ~450 m away"><strong>Autobus n. 23</strong> e tram (in arrivo) sulla Via Emilia — fermata a ~450 m</li>
-          <li data-en="<strong>COOP “Centroborgo” shopping centre</strong> — ~1.1 km"><strong>Centro commerciale COOP “Centroborgo”</strong> — ~1,1 km</li>
-          <li data-en="<strong>Ducati factory and museum</strong> — nearby"><strong>Fabbrica e Museo Ducati</strong> — nelle vicinanze</li>
-          <li data-en="<strong>G. Marconi Airport</strong> — a few minutes away"><strong>Aeroporto G. Marconi</strong> — pochi minuti</li>
-          <li data-en="<strong>Unipol Arena</strong> and <strong>Dall'Ara Stadium</strong> — easily reachable"><strong>Unipol Arena</strong> e <strong>Stadio Dall'Ara</strong> — facilmente raggiungibili</li>
-          <li data-en="<strong>Ring-road exit 2</strong> — direct link to the motorways"><strong>Uscita 2 della tangenziale</strong> — collegamento diretto alle autostrade</li>
-        </ul>
+        <ul class="location__list" id="locList"></ul>
       </div>
     </div>
   </section>
@@ -186,12 +150,12 @@
   <section id="book" class="section section--cta">
     <div class="container book">
       <div class="book__intro">
-        <h2 class="section__title" data-en="Book your stay">Prenota il tuo soggiorno</h2>
-        <p data-en="Send a request with your dates, or contact Giulio directly.">Invia una richiesta con le tue date oppure contatta direttamente Giulio.</p>
+        <h2 class="section__title" id="bookTitle"></h2>
+        <p id="bookIntro"></p>
         <div class="book__contacts">
-          <a class="btn btn--wa" href="https://wa.me/393313302299" target="_blank" rel="noopener">WhatsApp +39 331 3302299</a>
-          <a class="btn btn--ghost" href="tel:+393313302299" data-en="Call">Chiama</a>
-          <a class="btn btn--ghost" href="mailto:giulio.saladini@alice.it">Email</a>
+          <a class="btn btn--wa" id="cWa" target="_blank" rel="noopener"></a>
+          <a class="btn btn--ghost" id="cCall" data-en="Call">Chiama</a>
+          <a class="btn btn--ghost" id="cEmail">Email</a>
         </div>
       </div>
       <form class="book__form" id="bookForm">
@@ -232,9 +196,9 @@
         <p data-en="Entire apartment · Borgo Panigale, Bologna (Italy)">Intero appartamento · Borgo Panigale, Bologna (Italia)</p>
       </div>
       <div class="footer__links">
-        <a href="https://wa.me/393313302299" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="tel:+393313302299">+39 331 3302299</a>
-        <a href="mailto:giulio.saladini@alice.it">Email</a>
+        <a id="fWa" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="fPhone"></a>
+        <a id="fEmail">Email</a>
         <a href="#top" data-en="Back to top">Torna su</a>
       </div>
     </div>

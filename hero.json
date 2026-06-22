@@ -1,0 +1,20 @@
+{
+  "eyebrow": "Borgo Panigale · Bologna",
+  "tagline": "Le tue vacanze a Bologna, in tranquillità e a due passi dal centro.",
+  "tagline_en": "Your holiday in Bologna — peaceful and just a short hop from the centre.",
+  "type": "Intero appartamento",
+  "type_en": "Entire apartment",
+  "guests": "2 ospiti",
+  "guests_en": "2 guests",
+  "ctaPrimary": "Verifica disponibilità",
+  "ctaPrimary_en": "Check availability",
+  "ctaSecondary": "Guarda le foto",
+  "ctaSecondary_en": "See the photos",
+  "facts": [
+    { "num": "2", "label": "Ospiti", "label_en": "Guests" },
+    { "num": "1", "label": "Camera da letto", "label_en": "Bedroom" },
+    { "num": "1", "label": "Letto", "label_en": "Bed" },
+    { "num": "1", "label": "Bagno", "label_en": "Bathroom" },
+    { "num": "★", "label": "Parcheggio gratuito", "label_en": "Free parking" }
+  ]
+}

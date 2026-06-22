@@ -1,0 +1,12 @@
+{
+  "hostLine": "Il tuo host è **Giulio**",
+  "hostLine_en": "Your host is **Giulio**",
+  "cta": "Richiedi le date",
+  "cta_en": "Request dates",
+  "rows": [
+    { "label": "Check-in", "label_en": "Check-in", "value": "16:00 – 23:00", "value_en": "16:00 – 23:00" },
+    { "label": "Tipologia", "label_en": "Type", "value": "Intero appartamento", "value_en": "Entire apartment" },
+    { "label": "Piano", "label_en": "Floor", "value": "Terra, ingresso indip.", "value_en": "Ground, private entrance" },
+    { "label": "Parcheggio", "label_en": "Parking", "value": "Gratuito nel giardino", "value_en": "Free in the garden" }
+  ]
+}

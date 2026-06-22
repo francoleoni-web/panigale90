@@ -5,7 +5,6 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var grab = function (u) { return fetch(u, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); };
 
-  // Lingua: salvata, altrimenti dedotta dal browser (default italiano).
   var saved = localStorage.getItem("lang");
   var LANG = (saved === "en" || saved === "it") ? saved
     : ((navigator.language || "it").toLowerCase().indexOf("it") === 0 ? "it" : "en");
@@ -15,49 +14,49 @@
       it: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
       en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     },
-    weekdays: {
-      it: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"],
-      en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    },
+    weekdays: { it: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"], en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
     noSel: { it: "Nessuna data selezionata", en: "No dates selected" },
     checkin: { it: "Check-in: %s — scegli il check-out", en: "Check-in: %s — choose check-out" },
     range: { it: "Dal %s al %s · %d %u", en: "From %s to %s · %d %u" },
     night: { it: ["notte", "notti"], en: ["night", "nights"] },
+    reviewsWord: { it: "recensioni", en: "reviews" },
     title: { it: "Panigale 90 — Appartamento a Bologna | Borgo Panigale", en: "Panigale 90 — Apartment in Bologna | Borgo Panigale" },
     reqSubject: { it: "Richiesta soggiorno Panigale 90", en: "Booking request — Panigale 90" },
     reqLabels: { it: ["Nome", "Email", "Check-in", "Check-out", "Ospiti", "Messaggio"], en: ["Name", "Email", "Check-in", "Check-out", "Guests", "Message"] },
     reqSent: { it: "Si aprirà il tuo programma di posta con la richiesta precompilata.", en: "Your email app will open with the request pre-filled." }
   };
 
-  Promise.all([grab("availability.json"), grab("gallery.json"), grab("about.json")]).then(function (res) {
-    boot(res[0] || window.PANIGALE_AVAILABILITY || { booked: [], contactEmail: "" }, (res[1] && res[1].photos) || [], res[2]);
+  Promise.all([
+    grab("availability.json"), grab("gallery.json"), grab("about.json"), grab("amenities.json"),
+    grab("reviews.json"), grab("location.json"), grab("host.json"), grab("hero.json"), grab("book.json")
+  ]).then(function (d) {
+    boot({
+      avail: d[0] || { booked: [], contactEmail: "" }, gallery: d[1] || {}, about: d[2] || {},
+      amenities: d[3] || {}, reviews: d[4] || {}, location: d[5] || {}, host: d[6] || {}, hero: d[7] || {}, book: d[8] || {}
+    });
   });
 
-  function boot(cfg, galleryPhotos, about) {
-  /* ---------- DATA ---------- */
-  var PHOTOS = (galleryPhotos || []).map(function (p, i) {
-    return { src: p.image, cap_it: p.caption || "", cap_en: p.caption_en || p.caption || "", cls: i === 0 ? "g-big" : "" };
-  });
-  function cap(i) { return PHOTOS[i] ? (LANG === "en" ? PHOTOS[i].cap_en : PHOTOS[i].cap_it) : ""; }
-
-  var AMENITIES = [
-    { ic: "🅿️", it: "Parcheggio gratuito nel giardino", en: "Free parking in the garden" },
-    { ic: "📶", it: "Wi-Fi", en: "Wi-Fi" },
-    { ic: "🍳", it: "Angolo cottura attrezzato", en: "Equipped kitchenette" },
-    { ic: "🧺", it: "Lavatrice", en: "Washing machine" },
-    { ic: "🚪", it: "Ingresso indipendente", en: "Private entrance" },
-    { ic: "🌳", it: "Giardino condominiale", en: "Shared garden" },
-    { ic: "☕", it: "Area di ristoro comune", en: "Shared seating area" },
-    { ic: "🏠", it: "Piano terra", en: "Ground floor" },
-    { ic: "🧥", it: "Stenditoio per soggiorni lunghi", en: "Drying rack for longer stays" }
-  ];
-
+  function boot(D) {
   /* ---------- HELPERS ---------- */
   var pad = function (n) { return n < 10 ? "0" + n : "" + n; };
   var ymd = function (d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); };
   var parseD = function (s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); };
   var today = new Date(); today.setHours(0, 0, 0, 0);
+  var EN = function () { return LANG === "en"; };
+  function pick(o, k) { if (!o) return ""; return (EN() && o[k + "_en"]) ? o[k + "_en"] : (o[k] || ""); }
+  function esc(t) { return (t || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function bold(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/\*([^*]+)\*/g, "<em>$1</em>"); }
+  function mdLite(s) {
+    return (s || "").split(/\n{2,}/).map(function (par) {
+      var h = bold(par.trim()).replace(/\n/g, "<br>");
+      return h ? "<p>" + h + "</p>" : "";
+    }).join("");
+  }
+  function setText(id, t) { var el = $("#" + id); if (el) el.textContent = t; }
+  function setHtml(id, t) { var el = $("#" + id); if (el) el.innerHTML = t; }
 
+  /* ---------- AVAILABILITY ---------- */
+  var cfg = D.avail;
   var busy = {};
   (cfg.booked || []).forEach(function (r) {
     var d = parseD(r.from), end = parseD(r.to);
@@ -66,34 +65,53 @@
   var isBusy = function (d) { return !!busy[ymd(d)]; };
   var isPast = function (d) { return d < today; };
 
-  function esc(t) { return (t || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-  function mdLite(s) {
-    return (s || "").split(/\n{2,}/).map(function (par) {
-      var h = esc(par.trim());
-      h = h.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-      h = h.replace(/\*([^*]+)\*/g, "<em>$1</em>");
-      h = h.replace(/_([^_]+)_/g, "<em>$1</em>");
-      h = h.replace(/\n/g, "<br>");
-      return h ? "<p>" + h + "</p>" : "";
-    }).join("");
-  }
-  function pick(o, k) { return (LANG === "en" && o[k + "_en"]) ? o[k + "_en"] : o[k]; }
+  /* ---------- PHOTOS ---------- */
+  var PHOTOS = ((D.gallery && D.gallery.photos) || []).map(function (p, i) {
+    return { src: p.image, cap_it: p.caption || "", cap_en: p.caption_en || p.caption || "", cls: i === 0 ? "g-big" : "" };
+  });
+  function cap(i) { return PHOTOS[i] ? (EN() ? PHOTOS[i].cap_en : PHOTOS[i].cap_it) : ""; }
 
   /* ---------- STATIC STRINGS (data-en) ---------- */
   function applyStatic() {
     $$("[data-en]").forEach(function (el) {
       if (el.getAttribute("data-it") === null) el.setAttribute("data-it", el.innerHTML);
-      el.innerHTML = (LANG === "en") ? el.getAttribute("data-en") : el.getAttribute("data-it");
+      el.innerHTML = EN() ? el.getAttribute("data-en") : el.getAttribute("data-it");
     });
     $$("[data-en-ph]").forEach(function (el) {
       if (el.getAttribute("data-it-ph") === null) el.setAttribute("data-it-ph", el.placeholder || "");
-      el.placeholder = (LANG === "en") ? el.getAttribute("data-en-ph") : el.getAttribute("data-it-ph");
+      el.placeholder = EN() ? el.getAttribute("data-en-ph") : el.getAttribute("data-it-ph");
     });
   }
 
-  /* ---------- HERO + GALLERY ---------- */
+  /* ---------- HERO ---------- */
+  function renderHero() {
+    var h = D.hero, r = D.reviews;
+    setText("heroEyebrow", h.eyebrow || "");
+    setText("heroTagline", pick(h, "tagline"));
+    setText("heroCta1", pick(h, "ctaPrimary"));
+    setText("heroCta2", pick(h, "ctaSecondary"));
+    var meta = "";
+    if (r && r.score) meta += '<span class="bk-badge"><b>' + esc(r.score) + '</b> Booking.com</span>';
+    if (r && r.count) meta += '<span>' + esc(r.count) + ' ' + I18N.reviewsWord[LANG] + '</span>';
+    meta += '<span class="dot">•</span><span>' + esc(pick(h, "type")) + '</span>';
+    meta += '<span class="dot">•</span><span>' + esc(pick(h, "guests")) + '</span>';
+    setHtml("heroMeta", meta);
+    var fg = $("#factsGrid");
+    if (fg) {
+      fg.innerHTML = "";
+      (h.facts || []).forEach(function (f) {
+        var d = document.createElement("div"); d.className = "fact";
+        d.innerHTML = '<span class="fact__num">' + esc(f.num) + '</span><span class="fact__label">' + esc(EN() ? f.label_en : f.label) + '</span>';
+        fg.appendChild(d);
+      });
+    }
+  }
+
+  /* ---------- GALLERY ---------- */
   var grid = $("#galleryGrid");
-  function buildGallery() {
+  function renderGallery() {
+    setText("galleryTitle", pick(D.gallery, "title"));
+    setText("gallerySub", pick(D.gallery, "sub"));
     var heroImg = $("#heroImg");
     if (heroImg && PHOTOS[0]) { heroImg.src = PHOTOS[0].src; if (cap(0)) heroImg.alt = cap(0); }
     if (!grid) return;
@@ -128,30 +146,101 @@
     });
   }
 
-  /* ---------- ABOUT ---------- */
+  /* ---------- ABOUT + HOST CARD ---------- */
   function renderAbout() {
-    var box = $(".about__text");
-    if (!box || !about) return;
-    var html = '<h2 class="section__title">' + esc(pick(about, "title") || "L'alloggio") + "</h2>";
-    html += mdLite(pick(about, "intro"));
-    (about.sections || []).forEach(function (s) {
-      var h = pick(s, "heading");
-      if (h) html += "<h3>" + esc(h) + "</h3>";
-      html += mdLite(pick(s, "body"));
-    });
-    box.innerHTML = html;
+    var box = $(".about__text"), a = D.about;
+    if (box && a) {
+      var html = '<h2 class="section__title">' + esc(pick(a, "title") || "L'alloggio") + "</h2>";
+      html += mdLite(pick(a, "intro"));
+      (a.sections || []).forEach(function (s) {
+        var hd = pick(s, "heading"); if (hd) html += "<h3>" + esc(hd) + "</h3>";
+        html += mdLite(pick(s, "body"));
+      });
+      box.innerHTML = html;
+    }
+    var ho = D.host, r = D.reviews;
+    setHtml("hostLine", bold(pick(ho, "hostLine")));
+    setText("hostCta", pick(ho, "cta"));
+    var rows = $("#hostRows");
+    if (rows) {
+      rows.innerHTML = "";
+      (ho.rows || []).forEach(function (row) {
+        var li = document.createElement("li");
+        li.innerHTML = "<span>" + esc(EN() ? row.label_en : row.label) + "</span><strong>" + esc(EN() ? (row.value_en || row.value) : row.value) + "</strong>";
+        rows.appendChild(li);
+      });
+      if (r && r.score) {
+        var li2 = document.createElement("li");
+        li2.innerHTML = "<span>Booking.com</span><strong>" + esc(r.score) + "/10 (" + esc(r.count) + ")</strong>";
+        rows.appendChild(li2);
+      }
+    }
   }
 
   /* ---------- AMENITIES ---------- */
-  function buildAmenities() {
+  function renderAmenities() {
+    setText("amenTitle", pick(D.amenities, "title"));
+    setText("amenSub", pick(D.amenities, "sub"));
     var aGrid = $("#amenitiesGrid");
     if (!aGrid) return;
     aGrid.innerHTML = "";
-    AMENITIES.forEach(function (a) {
+    ((D.amenities && D.amenities.items) || []).filter(function (a) { return a.on; }).forEach(function (a) {
       var li = document.createElement("li");
-      li.innerHTML = '<span class="ic">' + a.ic + '</span><span>' + (LANG === "en" ? a.en : a.it) + "</span>";
+      li.innerHTML = '<span class="ic">' + (a.icon || "•") + '</span><span>' + esc(EN() ? (a.label_en || a.label) : a.label) + "</span>";
       aGrid.appendChild(li);
     });
+  }
+
+  /* ---------- REVIEWS ---------- */
+  function renderReviews() {
+    var r = D.reviews, sec = $("#reviews");
+    if (!r || r.show === false) { if (sec) sec.style.display = "none"; return; }
+    if (sec) sec.style.display = "";
+    setText("revTitle", pick(r, "title"));
+    setText("revSub", pick(r, "sub"));
+    setText("revScore", r.score || "");
+    setHtml("revLabel", "<strong>" + esc(EN() ? (r.scoreLabel_en || r.scoreLabel) : r.scoreLabel) + "</strong><br />" +
+      esc(r.count) + " " + I18N.reviewsWord[LANG] + " · " + esc(EN() ? (r.tagline_en || r.tagline) : r.tagline));
+    var a = $("#revUrl"); if (a) { a.href = r.url || "#"; a.textContent = (EN() ? "Read on Booking.com ↗" : "Leggi su Booking.com ↗"); }
+    var bars = $("#revBars");
+    if (bars) {
+      bars.innerHTML = "";
+      (r.subscores || []).forEach(function (s) {
+        var w = Math.max(0, Math.min(100, (parseFloat((s.value || "0").replace(",", ".")) || 0) * 10));
+        var li = document.createElement("li");
+        li.innerHTML = "<span>" + esc(EN() ? (s.label_en || s.label) : s.label) + '</span><i><b style="width:' + w + '%"></b></i><em>' + esc(s.value) + "</em>";
+        bars.appendChild(li);
+      });
+    }
+  }
+
+  /* ---------- LOCATION ---------- */
+  function renderLocation() {
+    setText("locTitle", pick(D.location, "title"));
+    setText("locSub", pick(D.location, "sub"));
+    setText("locMaplink", pick(D.location, "maplink"));
+    var list = $("#locList");
+    if (list) {
+      list.innerHTML = "";
+      ((D.location && D.location.points) || []).forEach(function (p) {
+        var li = document.createElement("li");
+        li.innerHTML = bold(EN() ? (p.text_en || p.text) : p.text);
+        list.appendChild(li);
+      });
+    }
+  }
+
+  /* ---------- BOOK + CONTACTS ---------- */
+  function renderBook() {
+    var b = D.book;
+    setText("bookTitle", pick(b, "title"));
+    setText("bookIntro", pick(b, "intro"));
+    var wa = $("#cWa"); if (wa && b.whatsappIntl) { wa.href = "https://wa.me/" + b.whatsappIntl; wa.textContent = "WhatsApp " + (b.phoneDisplay || ""); }
+    var call = $("#cCall"); if (call && b.phoneIntl) call.href = "tel:" + b.phoneIntl;
+    var em = $("#cEmail"); if (em && b.email) em.href = "mailto:" + b.email;
+    var fwa = $("#fWa"); if (fwa && b.whatsappIntl) fwa.href = "https://wa.me/" + b.whatsappIntl;
+    var fph = $("#fPhone"); if (fph) { fph.href = "tel:" + (b.phoneIntl || ""); fph.textContent = b.phoneDisplay || ""; }
+    var fem = $("#fEmail"); if (fem && b.email) fem.href = "mailto:" + b.email;
   }
 
   /* ---------- CALENDAR ---------- */
@@ -159,7 +248,6 @@
   var selStart = null, selEnd = null;
   function MO() { return I18N.months[LANG]; }
   function WD() { return I18N.weekdays[LANG]; }
-
   function buildMonth(base) {
     var wrap = document.createElement("div"); wrap.className = "cal-grid";
     var week = document.createElement("div"); week.className = "cal-week";
@@ -192,7 +280,7 @@
     return false;
   }
   function fmt(s) { var d = parseD(s); return d.getDate() + " " + MO()[d.getMonth()].slice(0, 3).toLowerCase() + " " + d.getFullYear(); }
-  function render() {
+  function renderCal() {
     if (!$("#calGrids")) return;
     var m2 = new Date(view.getFullYear(), view.getMonth() + 1, 1);
     $("#calMonths").innerHTML = "<span>" + MO()[view.getMonth()] + " " + view.getFullYear() +
@@ -204,11 +292,8 @@
       var n = Math.round((parseD(selEnd) - parseD(selStart)) / 86400000);
       var u = I18N.night[LANG][n === 1 ? 0 : 1];
       sel.textContent = I18N.range[LANG].replace("%s", fmt(selStart)).replace("%s", fmt(selEnd)).replace("%d", n).replace("%u", u);
-    } else if (selStart) {
-      sel.textContent = I18N.checkin[LANG].replace("%s", fmt(selStart));
-    } else {
-      sel.textContent = I18N.noSel[LANG];
-    }
+    } else if (selStart) { sel.textContent = I18N.checkin[LANG].replace("%s", fmt(selStart)); }
+    else { sel.textContent = I18N.noSel[LANG]; }
   }
   if ($("#calGrids")) {
     $("#calGrids").addEventListener("click", function (e) {
@@ -221,17 +306,17 @@
       else { selEnd = ds; }
       if (selStart) { var i = $("#fIn"); if (i) i.value = selStart; }
       if (selEnd) { var o = $("#fOut"); if (o) o.value = selEnd; }
-      render();
+      renderCal();
     });
     $("#calPrev").addEventListener("click", function () {
       var m = new Date(view.getFullYear(), view.getMonth() - 1, 1);
       var floor = new Date(today.getFullYear(), today.getMonth(), 1);
-      if (m >= floor) { view = m; render(); }
+      if (m >= floor) { view = m; renderCal(); }
     });
-    $("#calNext").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); });
+    $("#calNext").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
   }
 
-  /* ---------- FORM (mailto) ---------- */
+  /* ---------- FORM ---------- */
   var form = $("#bookForm");
   if (form) form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -239,7 +324,7 @@
     var body = L[0] + ": " + f.name.value + "\n" + L[1] + ": " + f.email.value + "\n" +
       L[2] + ": " + (f.checkin.value || "—") + "\n" + L[3] + ": " + (f.checkout.value || "—") + "\n" +
       L[4] + ": " + f.guests.value + "\n\n" + L[5] + ":\n" + (f.message.value || "—");
-    window.location.href = "mailto:" + (cfg.contactEmail || "") +
+    window.location.href = "mailto:" + (D.book.email || cfg.contactEmail || "") +
       "?subject=" + encodeURIComponent(I18N.reqSubject[LANG]) + "&body=" + encodeURIComponent(body);
     if ($("#bookNote")) $("#bookNote").textContent = I18N.reqSent[LANG];
   });
@@ -248,16 +333,14 @@
   function applyLang() {
     document.documentElement.lang = LANG;
     document.title = I18N.title[LANG];
-    var tg = $("#langToggle"); if (tg) tg.textContent = (LANG === "it") ? "EN" : "IT";
+    var tg = $("#langToggle"); if (tg) tg.textContent = EN() ? "IT" : "EN";
     applyStatic();
-    buildGallery();
-    buildAmenities();
-    renderAbout();
-    render();
+    renderHero(); renderGallery(); renderAbout(); renderAmenities();
+    renderReviews(); renderLocation(); renderBook(); renderCal();
   }
   var toggle = $("#langToggle");
   if (toggle) toggle.addEventListener("click", function () {
-    LANG = (LANG === "it") ? "en" : "it";
+    LANG = EN() ? "it" : "en";
     localStorage.setItem("lang", LANG);
     applyLang();
   });
