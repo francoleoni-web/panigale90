@@ -21,7 +21,7 @@
     },
     {
       "image": "/assets/img/camera_luminosa.jpg",
-      "caption": "Interni dell'appartamento",
+      "caption": "Camera con letto matrimoniale.",
       "caption_en": "Apartment interior"
     },
     {
@@ -55,7 +55,11 @@
       "caption_en": "The borough"
     },
     {
-      "image": "/assets/img/bagno_luminoso.jpg"
+      "image": "/assets/img/bagno_luminoso.jpg",
+      "caption": "Ampio bagno finestrato con doccia"
+    },
+    {
+      "image": "/assets/img/20240717_124927.jpg"
     }
   ]
 }
